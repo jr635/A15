@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>A14 IS117</title>
+</head>
+
+<!-- Source: https://www.w3schools.com/js/js_cookies.asp -->
+
+<script>
+
+    function setCk(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+    }
+
+    function getCk(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function checkCk() {
+        let user = getCk("username");
+        if (user != "") {
+            alert("Welcome back " + user);
+        } else {
+            user = prompt("Name:","");
+            if (user != "" && user != null) {
+                setCk("username", user, 365);
+            }
+        }
+    }
+
+    function displayCk(user) {
+        alert('Hello ' + user);
+        alert("Welcome back " + user);
+    }
+
+    function delCk() {
+        document.cookie = "username=; expires=Thu, 13 Apr 2023 00:00:00 UTC; path=/;";
+    }
+
+</script>
+
+<h1>A14 - Cookies</h1>
+
+<button onclick="checkCk()">Set Cookie</button>
+<button onclick="displayCk()">Display Cookie</button>
+<button onclick="delCk()">Delete Cookie</button>
+
+
+<footer>
+    <p>&copy; 2022, April 13 2022, Jakub Roszkowski</p>
+</footer>
+
+</html>
